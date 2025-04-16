@@ -6,14 +6,15 @@ interface HowItWorksStepProps {
   title: string;
   description: string;
   icon: LucideIcon;
+  motionIcon?: LucideIcon;
   isLast?: boolean;
 }
 
 export function HowItWorksStep({ number, title, description, icon: Icon, isLast }: HowItWorksStepProps) {
   return (
-    <div className="relative flex items-start gap-6">
+    <div className="relative flex items-start gap-6 group">
       <div className="flex-shrink-0">
-        <div className="flex h-14 w-14 items-center justify-center rounded-full bg-visa-blue/10">
+        <div className="flex h-14 w-14 items-center justify-center rounded-full bg-visa-blue/10 transition-colors group-hover:bg-visa-blue/20">
           <Icon className="h-6 w-6 text-visa-blue" />
         </div>
         {!isLast && (

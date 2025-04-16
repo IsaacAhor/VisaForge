@@ -1,5 +1,4 @@
-
-import { ArrowRight, FileText, Search, Flag, Clock } from "lucide-react";
+import { ArrowRight, FileText, Search, Flag, Clock, MoveRight, ArrowRightCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { HowItWorksStep } from "./HowItWorksStep";
@@ -12,6 +11,7 @@ export function HowItWorks() {
       description:
         "Tell us about your nationality, education, skills, income, and migration goals.",
       icon: FileText,
+      motionIcon: MoveRight,
     },
     {
       number: "02",
@@ -19,6 +19,7 @@ export function HowItWorks() {
       description:
         "Our system evaluates your eligibility across visa types and countries.",
       icon: Search,
+      motionIcon: ArrowRightCircle,
     },
     {
       number: "03",
@@ -26,6 +27,7 @@ export function HowItWorks() {
       description:
         "Receive personalized primary and fallback migration strategies.",
       icon: Flag,
+      motionIcon: MoveRight,
     },
     {
       number: "04",
@@ -51,11 +53,17 @@ export function HowItWorks() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-6 lg:pr-12">
             {steps.map((step, index) => (
-              <HowItWorksStep
-                key={step.number}
-                {...step}
-                isLast={index === steps.length - 1}
-              />
+              <div key={step.number} className="relative">
+                <HowItWorksStep
+                  {...step}
+                  isLast={index === steps.length - 1}
+                />
+                {step.motionIcon && index < steps.length - 1 && (
+                  <div className="absolute -right-4 top-1/2 transform -translate-y-1/2 hidden lg:block text-visa-blue/40">
+                    <step.motionIcon className="w-6 h-6 animate-pulse" />
+                  </div>
+                )}
+              </div>
             ))}
           </div>
           

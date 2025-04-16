@@ -1,6 +1,5 @@
 
 import { Link } from "react-router-dom";
-import { Globe } from "lucide-react";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -10,7 +9,6 @@ export function Footer() {
       <div className="container">
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="flex items-center gap-2">
-            <Globe className="h-5 w-5 text-visa-blue" />
             <span className="font-semibold">VisaForge</span>
           </div>
           <nav className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-muted-foreground">

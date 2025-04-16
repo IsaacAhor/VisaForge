@@ -1,5 +1,4 @@
 
-import { Globe } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
@@ -8,7 +7,6 @@ export function Navbar() {
     <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-white/80 border-b border-gray-100">
       <div className="container flex h-16 items-center justify-between">
         <Link to="/" className="flex items-center gap-2 font-semibold text-xl text-visa-dark">
-          <Globe className="h-6 w-6 text-visa-blue" />
           <span>VisaForge</span>
         </Link>
         <nav className="flex items-center gap-8">

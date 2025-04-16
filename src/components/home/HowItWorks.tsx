@@ -1,7 +1,8 @@
 
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, FileText, Search, Flag, Clock } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { HowItWorksStep } from "./HowItWorksStep";
 
 export function HowItWorks() {
   const steps = [
@@ -10,55 +11,72 @@ export function HowItWorks() {
       title: "Share Your Profile",
       description:
         "Tell us about your nationality, education, skills, income, and migration goals.",
+      icon: FileText,
     },
     {
       number: "02",
       title: "AI Analysis",
       description:
         "Our system evaluates your eligibility across visa types and countries.",
+      icon: Search,
     },
     {
       number: "03",
       title: "Review Recommendations",
       description:
         "Receive personalized primary and fallback migration strategies.",
+      icon: Flag,
     },
     {
       number: "04",
       title: "Actionable Plan",
       description:
         "Get a detailed roadmap with timeline, costs, and document requirements.",
+      icon: Clock,
     },
   ];
 
   return (
-    <section className="py-12 bg-visa-gray">
+    <section className="py-24 bg-gradient-to-b from-white to-visa-gray/30">
       <div className="container px-4 md:px-6">
-        <div className="flex flex-col items-center gap-4 text-center">
-          <div className="space-y-2">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-              How VisaForge Works
-            </h2>
-            <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl">
-              Four simple steps to your personalized migration strategy
-            </p>
+        <div className="flex flex-col items-center gap-4 text-center mb-16">
+          <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-visa-dark">
+            How VisaForge Works
+          </h2>
+          <p className="mx-auto max-w-[700px] text-xl text-visa-dark/60">
+            Your journey to living abroad starts here
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="space-y-6 lg:pr-12">
+            {steps.map((step, index) => (
+              <HowItWorksStep
+                key={step.number}
+                {...step}
+                isLast={index === steps.length - 1}
+              />
+            ))}
+          </div>
+          
+          <div className="relative aspect-square rounded-3xl bg-gradient-to-br from-visa-blue/5 to-visa-teal/5 p-8 hidden lg:flex items-center justify-center">
+            <div className="absolute inset-0 bg-grid-white/10" />
+            <img
+              src="/placeholder.svg"
+              alt="VisaForge Process Illustration"
+              className="relative w-full h-auto max-w-[400px] rounded-2xl shadow-2xl"
+            />
           </div>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-12">
-          {steps.map((step) => (
-            <div key={step.number} className="flex flex-col items-center text-center">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-visa-blue text-white font-bold text-lg mb-4">
-                {step.number}
-              </div>
-              <h3 className="text-xl font-bold mb-2">{step.title}</h3>
-              <p className="text-muted-foreground">{step.description}</p>
-            </div>
-          ))}
-        </div>
-        <div className="flex justify-center mt-12">
-          <Button asChild size="lg">
+
+        <div className="flex justify-center mt-16">
+          <Button
+            asChild
+            size="lg"
+            className="bg-visa-blue hover:bg-visa-blue/90 text-white rounded-full px-8 h-12 text-base"
+          >
             <Link to="/assessment">
-              Start Your Assessment <ArrowRight className="ml-2 h-4 w-4" />
+              Start Your Assessment <ArrowRight className="ml-2 h-5 w-5" />
             </Link>
           </Button>
         </div>

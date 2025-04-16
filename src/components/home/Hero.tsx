@@ -5,29 +5,34 @@ import { Button } from "@/components/ui/button";
 
 export function Hero() {
   return (
-    <section className="pt-20 pb-16">
+    <section className="pt-32 pb-20">
       <div className="container px-4 md:px-6">
-        <div className="flex flex-col items-center gap-4 text-center">
-          <div className="space-y-2">
-            <div className="inline-block rounded-lg bg-visa-gray px-3 py-1 text-sm">
-              Launching Beta - Join Now
-            </div>
-            <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl">
-              Your <span className="text-visa-blue">Global Migration</span> Strategy, Planned in Minutes
-            </h1>
-            <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl">
-              VisaForge helps you discover, evaluate, and plan your optimal path to living abroad — 
-              including visa eligibility, costs, timeline, and fallback routes.
-            </p>
-          </div>
-          <div className="flex flex-col sm:flex-row gap-3">
-            <Button asChild size="lg">
+        <div className="flex flex-col items-center gap-8 text-center max-w-[800px] mx-auto">
+          <span className="bg-visa-gray px-4 py-1.5 rounded-full text-sm font-medium text-visa-dark/80">
+            Now in Beta
+          </span>
+          <h1 className="text-5xl font-semibold tracking-tight sm:text-6xl md:text-7xl text-visa-dark">
+            Your Global Migration Strategy
+          </h1>
+          <p className="text-xl text-visa-dark/60 max-w-[600px]">
+            Discover your optimal path to living abroad — including visa eligibility, 
+            costs, timeline, and fallback routes.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 mt-4">
+            <Button 
+              asChild 
+              className="bg-visa-blue hover:bg-visa-blue/90 text-white rounded-full px-8 h-12 text-base"
+            >
               <Link to="/assessment">
-                Start Your Assessment <ArrowRight className="ml-2 h-4 w-4" />
+                Start Your Assessment <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
-            <Button variant="outline" size="lg">
-              <Link to="/how-it-works">How It Works</Link>
+            <Button 
+              variant="outline" 
+              asChild
+              className="rounded-full px-8 h-12 text-base border-visa-dark/10 text-visa-dark hover:bg-visa-dark/5"
+            >
+              <Link to="/how-it-works">Learn More</Link>
             </Button>
           </div>
         </div>

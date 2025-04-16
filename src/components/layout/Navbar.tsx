@@ -5,20 +5,23 @@ import { Button } from "@/components/ui/button";
 
 export function Navbar() {
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-sm border-b border-border">
+    <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-white/80 border-b border-gray-100">
       <div className="container flex h-16 items-center justify-between">
-        <Link to="/" className="flex items-center gap-2 font-bold text-xl text-foreground">
+        <Link to="/" className="flex items-center gap-2 font-semibold text-xl text-visa-dark">
           <Globe className="h-6 w-6 text-visa-blue" />
           <span>VisaForge</span>
         </Link>
-        <nav className="flex items-center gap-6">
-          <Link to="/how-it-works" className="text-sm font-medium hover:text-visa-blue transition-colors">
+        <nav className="flex items-center gap-8">
+          <Link to="/how-it-works" className="text-sm font-medium text-visa-dark/80 hover:text-visa-dark transition-colors">
             How It Works
           </Link>
-          <Link to="/about" className="text-sm font-medium hover:text-visa-blue transition-colors">
+          <Link to="/about" className="text-sm font-medium text-visa-dark/80 hover:text-visa-dark transition-colors">
             About
           </Link>
-          <Button asChild>
+          <Button
+            asChild
+            className="bg-visa-blue hover:bg-visa-blue/90 text-white rounded-full px-6"
+          >
             <Link to="/assessment">Start Your Assessment</Link>
           </Button>
         </nav>

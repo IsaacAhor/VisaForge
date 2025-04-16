@@ -1,3 +1,4 @@
+
 import { ArrowRight, FileText, Search, Flag, Clock, MoveRight, ArrowRightCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -39,19 +40,19 @@ export function HowItWorks() {
   ];
 
   return (
-    <section className="py-24 bg-gradient-to-b from-white to-visa-gray/30">
+    <section className="py-12 md:py-24 bg-gradient-to-b from-white to-visa-gray/30">
       <div className="container px-4 md:px-6">
-        <div className="flex flex-col items-center gap-4 text-center mb-16">
-          <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-visa-dark">
+        <div className="flex flex-col items-center gap-4 text-center mb-8 md:mb-16">
+          <h2 className="text-2xl md:text-3xl lg:text-5xl font-bold tracking-tighter text-visa-dark">
             How VisaForge Works
           </h2>
-          <p className="mx-auto max-w-[700px] text-xl text-visa-dark/60">
+          <p className="mx-auto max-w-[700px] text-lg md:text-xl text-visa-dark/60">
             Your journey to living abroad starts here
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <div className="space-y-6 lg:pr-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center">
+          <div className="space-y-4 md:space-y-6 lg:pr-12">
             {steps.map((step, index) => (
               <div key={step.number} className="relative">
                 <HowItWorksStep
@@ -67,7 +68,7 @@ export function HowItWorks() {
             ))}
           </div>
           
-          <div className="relative aspect-square rounded-3xl bg-gradient-to-br from-visa-blue/5 to-visa-teal/5 p-8 hidden lg:flex items-center justify-center">
+          <div className="relative aspect-square rounded-3xl bg-gradient-to-br from-visa-blue/5 to-visa-teal/5 p-4 md:p-8 hidden lg:flex items-center justify-center">
             <div className="absolute inset-0 bg-grid-white/10" />
             <img
               src="/placeholder.svg"
@@ -77,11 +78,11 @@ export function HowItWorks() {
           </div>
         </div>
 
-        <div className="flex justify-center mt-16">
+        <div className="flex justify-center mt-8 md:mt-16">
           <Button
             asChild
             size="lg"
-            className="bg-visa-blue hover:bg-visa-blue/90 text-white rounded-full px-8 h-12 text-base"
+            className="bg-visa-blue hover:bg-visa-blue/90 text-white rounded-full px-6 md:px-8 h-12 text-base"
           >
             <Link to="/assessment">
               Start Your Assessment <ArrowRight className="ml-2 h-5 w-5" />

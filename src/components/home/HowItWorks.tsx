@@ -71,7 +71,7 @@ export function HowItWorks() {
           <div className="relative aspect-square rounded-3xl bg-gradient-to-br from-visa-blue/5 to-visa-teal/5 p-4 md:p-8 hidden lg:flex items-center justify-center">
             <div className="absolute inset-0 bg-grid-white/10" />
             <img
-              src="/placeholder.svg"
+              src="/lovable-uploads/20afd84b-ccd2-4293-8c1e-7b8f04b6129a.png"
               alt="VisaForge Process Illustration"
               className="relative w-full h-auto max-w-[400px] rounded-2xl shadow-2xl"
             />

@@ -14,17 +14,20 @@ export function Navbar() {
       <Link 
         to="/#how-it-works" 
         className="text-sm font-medium text-visa-dark/80 hover:text-visa-dark transition-colors"
-        onClick={(e) => handleScrollToSection(e, 'how-it-works')} // Add onClick handler
+        // Removed onClick handler
       >
         How It Works
       </Link>
-      <Link to="/about" className="text-sm font-medium text-visa-dark/80 hover:text-visa-dark transition-colors">
+      <Link 
+        to="/#about" // Changed link to point to the section ID
+        className="text-sm font-medium text-visa-dark/80 hover:text-visa-dark transition-colors"
+      >
         About
       </Link>
       <Link 
         to="/#pricing" 
         className="text-sm font-medium text-visa-dark/80 hover:text-visa-dark transition-colors"
-        onClick={(e) => handleScrollToSection(e, 'pricing')} // Add onClick handler
+        // Removed onClick handler
       >
         Pricing
       </Link>
@@ -37,18 +40,7 @@ export function Navbar() {
     </>
   );
 
-  const handleScrollToSection = (event: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
-    // If on the homepage, scroll to the section
-    if (location.pathname === '/') {
-      event.preventDefault(); // Prevent default link navigation
-      const section = document.getElementById(sectionId);
-      if (section) {
-        section.scrollIntoView({ behavior: 'smooth' });
-      }
-    }
-    // Otherwise, let the Link component handle navigation (e.g., /#pricing)
-    // The browser should handle scrolling once the page loads
-  };
+  // Removed handleScrollToSection function as it's no longer needed here
 
   const handleLogoClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
     // If already on the homepage, scroll to top smoothly

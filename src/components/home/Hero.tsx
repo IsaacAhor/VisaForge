@@ -18,23 +18,15 @@ export function Hero() {
             Discover your optimal path to living abroad — including visa eligibility, 
             costs, timeline, and fallback routes.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 mt-4">
-            <Button 
-              asChild 
-              className="bg-visa-blue hover:bg-visa-blue/90 text-white rounded-full px-8 h-12 text-base"
-            >
-              <Link to="/assessment">
-                Start Your Assessment <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
-            </Button>
-            <Button 
-              variant="outline" 
-              asChild
-              className="rounded-full px-8 h-12 text-base border-visa-dark/10 text-visa-dark hover:bg-visa-dark/5"
-            >
-              <Link to="/how-it-works">Learn More</Link>
-            </Button>
-          </div>
+          {/* Removed the flex container and the Learn More button */}
+          <Button 
+            asChild 
+            className="bg-visa-blue hover:bg-visa-blue/90 text-white rounded-full px-8 h-12 text-base mt-4" // Added mt-4 here
+          >
+            <Link to="/assessment">
+              Start Your Assessment <ArrowRight className="ml-2 h-5 w-5" />
+            </Link>
+          </Button>
         </div>
       </div>
     </section>

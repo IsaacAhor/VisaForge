@@ -49,7 +49,7 @@ export function VisaResult({ isPrimary = false, data }: VisaResultProps) {
           <div className="text-right">
             <div className="flex items-center justify-end gap-2">
               <span className="text-sm font-medium">Confidence</span>
-              <ThumbsUp className={`h-4 w-4 ${data.confidence >= 70 ? "text-green-500" : data.confidence >= 40 ? "text-amber-500" : "text-red-500"}`} />
+              <ThumbsUp className={`h-4 w-4 ${data.confidence >= 70 ? "text-primary" : data.confidence >= 40 ? "text-amber-500" : "text-red-500"}`} /> {/* Changed text-green-500 to text-primary */}
             </div>
             <div className="mt-2">
               <Progress value={data.confidence} className="h-2 w-24" />
@@ -63,14 +63,14 @@ export function VisaResult({ isPrimary = false, data }: VisaResultProps) {
         
         <div className="grid grid-cols-2 gap-4">
           <div className="flex items-start gap-2">
-            <Clock className="h-5 w-5 text-visa-teal mt-0.5" />
+            <Clock className="h-5 w-5 text-primary mt-0.5" /> {/* Changed text-visa-teal to text-primary */}
             <div>
               <div className="text-sm font-medium">Timeframe</div>
               <div className="text-sm text-muted-foreground">{data.timeframe}</div>
             </div>
           </div>
           <div className="flex items-start gap-2">
-            <CreditCard className="h-5 w-5 text-visa-teal mt-0.5" />
+            <CreditCard className="h-5 w-5 text-primary mt-0.5" /> {/* Changed text-visa-teal to text-primary */}
             <div>
               <div className="text-sm font-medium">Estimated Cost</div>
               <div className="text-sm text-muted-foreground">{data.cost}</div>

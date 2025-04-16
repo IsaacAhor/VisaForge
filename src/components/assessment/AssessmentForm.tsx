@@ -49,8 +49,10 @@ export function AssessmentForm() {
       setStep(step + 1);
       window.scrollTo(0, 0);
     } else {
-      // Submit form and navigate to results
-      navigate("/results");
+      // TODO: Implement actual form submission logic here (e.g., save to backend)
+      console.log("Assessment Data:", formData); 
+      // Navigate to the homepage with state to indicate scrolling to pricing
+      navigate("/", { state: { scrollToPricing: true } }); 
     }
   };
 

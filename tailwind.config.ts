@@ -64,7 +64,7 @@ export default {
         },
         visa: {
           blue: "#147CE5",
-          teal: "#32ADE6",
+          // teal: "#32ADE6", // Removed visa-teal
           dark: "#1D1D1F",
           orange: "#fa8072",
           gray: "#F5F5F7",

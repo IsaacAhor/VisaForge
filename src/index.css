@@ -68,6 +68,25 @@
 }
 
 @layer base {
+  /* Add custom animation keyframes */
+  @keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+  }
+}
+
+@layer utilities {
+  /* Add custom animation utility */
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+}
+
+@layer base {
+  html {
+    @apply scroll-smooth; /* Add smooth scrolling */
+  }
   * {
     @apply border-border;
   }

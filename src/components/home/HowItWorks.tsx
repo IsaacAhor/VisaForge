@@ -40,7 +40,7 @@ export function HowItWorks() {
   ];
 
   return (
-    <section className="py-12 md:py-24 bg-gradient-to-b from-white to-visa-gray/30">
+    <section id="how-it-works" className="py-12 md:py-24 bg-gradient-to-b from-white to-visa-gray/30"> {/* Added id="how-it-works" */}
       <div className="container px-4 md:px-6">
         <div className="flex flex-col items-center gap-4 text-center mb-8 md:mb-16">
           <h2 className="text-2xl md:text-3xl lg:text-5xl font-bold tracking-tighter text-visa-dark">
@@ -73,7 +73,7 @@ export function HowItWorks() {
             <img
               src="/lovable-uploads/20afd84b-ccd2-4293-8c1e-7b8f04b6129a.png"
               alt="VisaForge Process Illustration"
-              className="relative w-full h-auto max-w-[400px] rounded-2xl shadow-2xl"
+              className="relative w-full h-auto max-w-[400px] rounded-2xl shadow-2xl animate-float" // Added animate-float class
             />
           </div>
         </div>

@@ -2,7 +2,7 @@
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
 
-export type PlanTier = 'basic' | 'pro';
+export type PlanTier = 'free' | 'basic' | 'pro';
 
 interface PlanDetails {
   name: string;
@@ -26,6 +26,13 @@ export const PLAN_DETAILS: Record<PlanTier, PlanDetails> = {
     description: 'Unlock 5 countries with extended features',
     countries: 5,
     fallback: 2
+  },
+  free: {
+    name: 'Free Tier',
+    price: 0,
+    description: 'Preview 1 country (read-only)',
+    countries: 1,
+    fallback: 0
   }
 };
 

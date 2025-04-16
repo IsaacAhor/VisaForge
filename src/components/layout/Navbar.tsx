@@ -1,20 +1,32 @@
 
 import { Menu } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom"; // Import useLocation
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 export function Navbar() {
   const isMobile = useIsMobile();
+  const location = useLocation(); // Get current location
 
   const NavLinks = () => (
     <>
-      <Link to="/how-it-works" className="text-sm font-medium text-visa-dark/80 hover:text-visa-dark transition-colors">
+      <Link 
+        to="/#how-it-works" 
+        className="text-sm font-medium text-visa-dark/80 hover:text-visa-dark transition-colors"
+        onClick={(e) => handleScrollToSection(e, 'how-it-works')} // Add onClick handler
+      >
         How It Works
       </Link>
       <Link to="/about" className="text-sm font-medium text-visa-dark/80 hover:text-visa-dark transition-colors">
         About
+      </Link>
+      <Link 
+        to="/#pricing" 
+        className="text-sm font-medium text-visa-dark/80 hover:text-visa-dark transition-colors"
+        onClick={(e) => handleScrollToSection(e, 'pricing')} // Add onClick handler
+      >
+        Pricing
       </Link>
       <Button
         asChild
@@ -25,10 +37,36 @@ export function Navbar() {
     </>
   );
 
+  const handleScrollToSection = (event: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
+    // If on the homepage, scroll to the section
+    if (location.pathname === '/') {
+      event.preventDefault(); // Prevent default link navigation
+      const section = document.getElementById(sectionId);
+      if (section) {
+        section.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+    // Otherwise, let the Link component handle navigation (e.g., /#pricing)
+    // The browser should handle scrolling once the page loads
+  };
+
+  const handleLogoClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    // If already on the homepage, scroll to top smoothly
+    if (location.pathname === '/') {
+      event.preventDefault(); // Prevent default link navigation
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    // Otherwise, let the Link component handle navigation to '/'
+  };
+
   return (
     <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-white/80 border-b border-gray-100">
       <div className="container flex h-16 items-center justify-between">
-        <Link to="/" className="flex items-center gap-2 font-semibold text-xl text-visa-dark">
+        <Link 
+          to="/" 
+          className="flex items-center gap-2 font-semibold text-xl text-visa-dark"
+          onClick={handleLogoClick} // Add onClick handler
+        >
           <span>VisaForge</span>
         </Link>
         {isMobile ? (

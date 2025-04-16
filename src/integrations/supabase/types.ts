@@ -9,7 +9,114 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      migration_plans: {
+        Row: {
+          created_at: string
+          data: Json
+          fallback_countries: string[] | null
+          id: string
+          primary_country: string
+          status: string
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          data?: Json
+          fallback_countries?: string[] | null
+          id?: string
+          primary_country: string
+          status?: string
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          data?: Json
+          fallback_countries?: string[] | null
+          id?: string
+          primary_country?: string
+          status?: string
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      payments: {
+        Row: {
+          amount: number
+          created_at: string
+          currency: string
+          id: string
+          status: string
+          stripe_payment_id: string | null
+          stripe_session_id: string | null
+          tier: Database["public"]["Enums"]["user_tier"]
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          currency?: string
+          id?: string
+          status: string
+          stripe_payment_id?: string | null
+          stripe_session_id?: string | null
+          tier: Database["public"]["Enums"]["user_tier"]
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          currency?: string
+          id?: string
+          status?: string
+          stripe_payment_id?: string | null
+          stripe_session_id?: string | null
+          tier?: Database["public"]["Enums"]["user_tier"]
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          current_countries: number
+          email: string
+          fallback_countries: number
+          full_name: string | null
+          id: string
+          tier: Database["public"]["Enums"]["user_tier"]
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          current_countries?: number
+          email: string
+          fallback_countries?: number
+          full_name?: string | null
+          id: string
+          tier?: Database["public"]["Enums"]["user_tier"]
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          current_countries?: number
+          email?: string
+          fallback_countries?: number
+          full_name?: string | null
+          id?: string
+          tier?: Database["public"]["Enums"]["user_tier"]
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -18,7 +125,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      user_tier: "free" | "basic" | "pro"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -133,6 +240,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      user_tier: ["free", "basic", "pro"],
+    },
   },
 } as const

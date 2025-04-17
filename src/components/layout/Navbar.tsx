@@ -1,17 +1,32 @@
 
-import { Menu } from "lucide-react";
-import { Link, useLocation } from "react-router-dom"; // Import useLocation
+import { Menu, LogOut } from "lucide-react"; // Import LogOut icon
+import { Link, useLocation, useNavigate } from "react-router-dom"; // Import useNavigate
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useAuth } from "@/contexts/AuthContext"; // Import useAuth
+import { toast } from "@/hooks/use-toast"; // Import toast for sign out feedback
 
 export function Navbar() {
   const isMobile = useIsMobile();
-  const location = useLocation(); // Get current location
+  const location = useLocation();
+  const navigate = useNavigate(); // Add navigate
+  const { user, signOut, loading } = useAuth(); // Get auth state and signOut function
 
-  const NavLinks = () => (
+  const handleSignOut = async () => {
+    try {
+      await signOut();
+      toast({ title: "Signed out successfully." });
+      navigate('/'); // Redirect to home after sign out
+    } catch (error) {
+      toast({ title: "Sign out failed", description: "Please try again.", variant: "destructive" });
+    }
+  };
+
+  // Define NavLinks content separately for reuse
+  const navLinkItems = (
     <>
-      <Link 
+      <Link
         to="/#how-it-works" 
         className="text-sm font-medium text-visa-dark/80 hover:text-visa-dark transition-colors"
         // Removed onClick handler
@@ -31,16 +46,40 @@ export function Navbar() {
       >
         Pricing
       </Link>
+      {/* Keep Assessment button, it's protected by ProtectedRoute */}
       <Button
         asChild
+        variant="default" // Keep primary style
         className="bg-visa-blue hover:bg-visa-blue/90 text-white rounded-full px-6"
       >
-        <Link to="/assessment">Start Your Assessment</Link>
+        <Link to="/assessment">Start Assessment</Link>
       </Button>
+
+      {/* Conditional Auth Button */}
+      {loading ? (
+        <Button variant="ghost" disabled>Loading...</Button> // Show loading state
+      ) : user ? (
+        <Button
+          variant="outline"
+          onClick={handleSignOut}
+          className="rounded-full px-4 py-2 flex items-center gap-2"
+        >
+          <LogOut className="h-4 w-4" />
+          Sign Out
+        </Button>
+      ) : (
+        <Button
+          asChild
+          variant="outline" // Use outline style for Sign In
+          className="rounded-full px-6"
+        >
+          <Link to="/auth">Sign In</Link>
+        </Button>
+      )}
     </>
   );
 
-  // Removed handleScrollToSection function as it's no longer needed here
+  const NavLinks = () => navLinkItems; // Use the defined items
 
   const handleLogoClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
     // If already on the homepage, scroll to top smoothly
@@ -68,15 +107,17 @@ export function Navbar() {
                 <Menu className="h-5 w-5" />
               </Button>
             </SheetTrigger>
-            <SheetContent>
-              <nav className="flex flex-col items-start gap-6 pt-6">
-                <NavLinks />
+            <SheetContent side="right"> {/* Ensure sheet comes from right */}
+              <nav className="flex flex-col items-start gap-6 pt-10"> {/* Added more top padding */}
+                {/* Render items directly for mobile layout */}
+                {navLinkItems}
               </nav>
             </SheetContent>
           </Sheet>
         ) : (
-          <nav className="flex items-center gap-8">
-            <NavLinks />
+          <nav className="flex items-center gap-6"> {/* Adjusted gap */}
+            {/* Render items directly for desktop layout */}
+            {navLinkItems}
           </nav>
         )}
       </div>

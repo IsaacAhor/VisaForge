@@ -57,8 +57,12 @@ export function PricingPlans() {
     let fallbackText = `${details.fallback} fallback countr`;
     fallbackText += (details.fallback === 1 ? 'y' : 'ies'); // Explicit pluralization logic
 
+    // Generate primary country text with correct pluralization
+    let primaryCountryText = `Access to ${details.countries} primary countr`;
+    primaryCountryText += (details.countries === 1 ? 'y' : 'ies');
+
     const features = [
-      `Access to ${details.countries} primary countries`,
+      primaryCountryText, // Use the generated text
       fallbackText, // Use the generated text
       ...(tier !== 'free' ? ['PDF download of migration plans'] : ['Read-only preview']), // Adjust feature based on tier
       ...(tier === 'pro' ? [

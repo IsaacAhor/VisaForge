@@ -47,7 +47,7 @@ export function AssessmentForm() {
   const nextStep = () => {
     if (step < 4) {
       setStep(step + 1);
-      window.scrollTo(0, 0);
+      // window.scrollTo(0, 0); // Removed scroll to top
     } else {
       // TODO: Implement actual form submission logic here (e.g., save to backend)
       console.log("Assessment Data:", formData); 
@@ -59,7 +59,7 @@ export function AssessmentForm() {
   const prevStep = () => {
     if (step > 1) {
       setStep(step - 1);
-      window.scrollTo(0, 0);
+      // window.scrollTo(0, 0); // Removed scroll to top
     }
   };
 

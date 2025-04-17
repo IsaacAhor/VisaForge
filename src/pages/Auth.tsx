@@ -1,9 +1,10 @@
 
-import { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { useAuth } from '@/contexts/AuthContext';
-import { toast } from '@/hooks/use-toast';
-import { Button } from '@/components/ui/button';
+import { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
+import { supabase } from "@/integrations/supabase/client"; // Import supabase client
+import { toast } from "@/hooks/use-toast";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -12,10 +13,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 export default function Auth() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { signIn, signUp, signInWithGoogle, user } = useAuth();
+  const { user } = useAuth(); // Only need user from context here
   const [isLoading, setIsLoading] = useState(false);
+  const [isGoogleLoading, setIsGoogleLoading] = useState(false); // Separate loading state for Google
   const [formData, setFormData] = useState({
-    email: '',
+    email: "",
     password: '',
     fullName: ''
   });
@@ -38,9 +40,13 @@ export default function Auth() {
     setIsLoading(true);
 
     try {
-      const { error } = await signIn(formData.email, formData.password);
+      // Use supabase client directly
+      const { error } = await supabase.auth.signInWithPassword({
+        email: formData.email,
+        password: formData.password,
+      });
       if (error) throw error;
-      
+
       // Redirect to original destination or home
       const from = location.state?.from?.pathname || '/';
       navigate(from);
@@ -65,12 +71,19 @@ export default function Auth() {
     setIsLoading(true);
 
     try {
-      const { error } = await signUp(formData.email, formData.password, {
-        full_name: formData.fullName
+      // Use supabase client directly
+      const { error } = await supabase.auth.signUp({
+        email: formData.email,
+        password: formData.password,
+        options: {
+          data: {
+            full_name: formData.fullName, // Pass additional data if needed
+          },
+        },
       });
-      
+
       if (error) throw error;
-      
+
       toast({
         title: 'Account created',
         description: 'Please check your email to confirm your account.'
@@ -87,8 +100,17 @@ export default function Auth() {
   };
 
   const handleGoogleSignIn = async () => {
+    setIsGoogleLoading(true);
     try {
-      await signInWithGoogle();
+      // Use supabase client directly with dynamic redirect
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          redirectTo: window.location.origin, // Use current origin for redirect
+        },
+      });
+      if (error) throw error;
+      // Note: Supabase handles the redirect, so no navigation needed here
     } catch (error: any) {
       toast({
         title: 'Authentication error',
@@ -160,7 +182,7 @@ export default function Auth() {
                   className="w-full"
                   onClick={handleGoogleSignIn}
                 >
-                  Google
+                  {isGoogleLoading ? "Redirecting..." : "Google"}
                 </Button>
               </CardFooter>
             </form>
@@ -223,7 +245,7 @@ export default function Auth() {
                   className="w-full"
                   onClick={handleGoogleSignIn}
                 >
-                  Google
+                  {isGoogleLoading ? "Redirecting..." : "Google"}
                 </Button>
               </CardFooter>
             </form>

@@ -1,0 +1,13 @@
+# Netlify build configuration for Vite SPA
+
+[build]
+  command = "vite build"  # Build command from package.json
+  publish = "dist"        # Vite's default output directory
+  environment = { NODE_VERSION = "18" } # Specify Node.js version (optional, adjust if needed)
+
+# Redirect rule for Single Page Applications (SPA)
+# This ensures client-side routing works correctly on refresh/direct access
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

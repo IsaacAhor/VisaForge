@@ -24,7 +24,7 @@ export function Hero() {
             className="bg-visa-blue hover:bg-visa-blue/90 text-white rounded-full px-8 h-12 text-base mt-4" // Added mt-4 here
           >
             <Link to="/assessment">
-              Start Your Assessment <ArrowRight className="ml-2 h-5 w-5" />
+              Start Free Assessment <ArrowRight className="ml-2 h-5 w-5" />
             </Link>
           </Button>
         </div>

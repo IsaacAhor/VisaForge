@@ -85,7 +85,7 @@ export function HowItWorks() {
             className="bg-visa-blue hover:bg-visa-blue/90 text-white rounded-full px-6 md:px-8 h-12 text-base"
           >
             <Link to="/assessment">
-              Start Your Assessment <ArrowRight className="ml-2 h-5 w-5" />
+              Start Free Assessment <ArrowRight className="ml-2 h-5 w-5" />
             </Link>
           </Button>
         </div>

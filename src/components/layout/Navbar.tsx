@@ -52,7 +52,7 @@ export function Navbar() {
         variant="default" // Keep primary style
         className="bg-visa-blue hover:bg-visa-blue/90 text-white rounded-full px-6"
       >
-        <Link to="/assessment">Start Assessment</Link>
+        <Link to="/assessment">Start Free Assessment</Link>
       </Button>
 
       {/* Conditional Auth Button */}

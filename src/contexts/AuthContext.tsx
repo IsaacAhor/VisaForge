@@ -89,12 +89,17 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
         if (currentUser) {
           await fetchProfile(currentUser.id); // Fetch profile on auth change
-        } else {
-          setProfile(null); // Clear profile if user logs out
-        }
-        setLoading(false); // Finish loading after state change
-      }
-    );
+         } else {
+           setProfile(null); // Clear profile if user logs out
+         }
+         setLoading(false); // Finish loading after state change
+
+         // Clean up URL hash after OAuth redirect
+         if (window.location.hash.includes('#access_token')) {
+           window.history.replaceState({}, document.title, window.location.pathname + window.location.search);
+         }
+       }
+     );
 
     // Cleanup listener on component unmount
     return () => {

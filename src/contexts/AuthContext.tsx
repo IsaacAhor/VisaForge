@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect, useContext, ReactNode } from 'react';
 import { Session, User } from '@supabase/supabase-js';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import { supabase } from '@/integrations/supabase/client';
 import type { Database } from '@/integrations/supabase/types'; // Import Database type
 
@@ -22,6 +23,7 @@ interface AuthProviderProps {
 }
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
+  const navigate = useNavigate(); // Get navigate function
   const [session, setSession] = useState<Session | null>(null);
   const [user, setUser] = useState<User | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null); // Add profile state
@@ -94,9 +96,14 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
          }
          setLoading(false); // Finish loading after state change
 
-         // Clean up URL hash after OAuth redirect
-         if (window.location.hash.includes('#access_token')) {
+         // Clean up URL hash after OAuth redirect and navigate if needed
+         const hashContainsToken = window.location.hash.includes('#access_token');
+         if (hashContainsToken) {
            window.history.replaceState({}, document.title, window.location.pathname + window.location.search);
+           // If the hash had a token AND we now have a session, navigate to pricing
+           if (session) {
+             navigate('/#pricing');
+           }
          }
        }
      );

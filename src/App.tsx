@@ -1,5 +1,5 @@
 
-import { useEffect } from 'react'; // Import useEffect
+import { useEffect, lazy, Suspense } from 'react'; // Import lazy and Suspense
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -7,20 +7,29 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useNavigate, Navigate } from "react-router-dom"; // Import useNavigate and Navigate
 import { useAuth } from './contexts/AuthContext'; // Import useAuth
 import ProtectedRoute from "./components/layout/ProtectedRoute"; // Import ProtectedRoute
-import Index from "./pages/Index";
-import NotFound from "./pages/NotFound";
-import Assessment from "./pages/Assessment";
-import Results from "./pages/Results";
-import HowItWorks from "./pages/HowItWorks";
-import About from "./pages/About";
-import Auth from "./pages/Auth";
-import PricingPage from "./pages/Pricing"; // Import the new Pricing page
-import PaymentSuccess from "./pages/PaymentSuccess";
-import PaymentCancelled from "./pages/PaymentCancelled";
+// Lazy load page components
+const Index = lazy(() => import("./pages/Index"));
+const NotFound = lazy(() => import("./pages/NotFound"));
+const Assessment = lazy(() => import("./pages/Assessment"));
+const Results = lazy(() => import("./pages/Results"));
+const HowItWorks = lazy(() => import("./pages/HowItWorks"));
+const About = lazy(() => import("./pages/About"));
+const Auth = lazy(() => import("./pages/Auth"));
+const PricingPage = lazy(() => import("./pages/Pricing")); 
+const PaymentSuccess = lazy(() => import("./pages/PaymentSuccess"));
+const PaymentCancelled = lazy(() => import("./pages/PaymentCancelled"));
 
 const queryClient = new QueryClient();
 
-// Define a component to handle the redirect logic
+// Loading fallback component
+const LoadingFallback = () => (
+  <div className="flex justify-center items-center min-h-screen">
+    Loading... 
+    {/* TODO: Replace with a proper spinner/skeleton component */}
+  </div>
+);
+
+// Define a component to handle the redirect logic and routing
 const AppContent = () => {
   const navigate = useNavigate();
   const { loginRedirectTarget, clearLoginRedirect } = useAuth();
@@ -33,9 +42,10 @@ const AppContent = () => {
   }, [loginRedirectTarget, navigate, clearLoginRedirect]);
 
   return (
-    <Routes>
-      {/* Public Routes */}
-      <Route path="/" element={<Navigate to="/home" replace />} /> {/* Add redirect from root */}
+    <Suspense fallback={<LoadingFallback />}>
+      <Routes>
+        {/* Public Routes */}
+        <Route path="/" element={<Navigate to="/home" replace />} /> {/* Add redirect from root */}
       <Route path="/home" element={<Index />} /> {/* Changed path to /home */}
           <Route path="/how-it-works" element={<HowItWorks />} />
           <Route path="/about" element={<About />} />
@@ -76,9 +86,10 @@ const AppContent = () => {
             }
           />
 
-      {/* Catch-all Not Found Route */}
-      <Route path="*" element={<NotFound />} />
-    </Routes>
+        {/* Catch-all Not Found Route */}
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </Suspense>
   );
 };
 

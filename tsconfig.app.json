@@ -20,6 +20,7 @@
     "noUnusedParameters": false,
     "noImplicitAny": false,
     "noFallthroughCasesInSwitch": false,
+    // Removed "types" option to allow automatic type inference
 
     "baseUrl": ".",
     "paths": {

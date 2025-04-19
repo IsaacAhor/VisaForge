@@ -55,10 +55,11 @@ export default function Auth() {
         title: 'Welcome back!',
         description: 'You have successfully signed in.'
       });
-    } catch (error: any) {
+    } catch (error: unknown) { // Use unknown type
+      const message = error instanceof Error ? error.message : 'Failed to sign in';
       toast({
         title: 'Authentication error',
-        description: error.message || 'Failed to sign in',
+        description: message,
         variant: 'destructive'
       });
     } finally {
@@ -88,10 +89,11 @@ export default function Auth() {
         title: 'Account created',
         description: 'Please check your email to confirm your account.'
       });
-    } catch (error: any) {
+    } catch (error: unknown) { // Use unknown type
+      const message = error instanceof Error ? error.message : 'Failed to create account';
       toast({
         title: 'Registration error',
-        description: error.message || 'Failed to create account',
+        description: message,
         variant: 'destructive'
       });
     } finally {
@@ -111,10 +113,11 @@ export default function Auth() {
       });
       if (error) throw error;
       // Note: Supabase handles the redirect, so no navigation needed here
-    } catch (error: any) {
+    } catch (error: unknown) { // Use unknown type
+      const message = error instanceof Error ? error.message : 'Failed to sign in with Google';
       toast({
         title: 'Authentication error',
-        description: error.message || 'Failed to sign in with Google',
+        description: message,
         variant: 'destructive'
       });
     }

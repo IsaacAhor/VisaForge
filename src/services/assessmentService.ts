@@ -50,7 +50,7 @@ export const saveAssessmentData = async (
 
   const insertPayload: MigrationPlanInsert = {
     user_id: userId,
-    title: `${formData.fullName}'s Plan` || 'Untitled Migration Plan', // Use full name for title
+    title: formData.fullName ? `${formData.fullName}'s Plan` : 'Untitled Migration Plan', // Check fullName before creating title
     primary_country: formData.preferredCountry || 'Not Specified', // Use preferred country
     // fallback_countries: [], // Not collected in form yet
     status: 'draft', // Default status

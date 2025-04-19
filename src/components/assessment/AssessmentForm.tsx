@@ -91,31 +91,34 @@ export function AssessmentForm() {
     setIsSubmitting(true); // Set loading state
 
     try {
+      // Process urgency data before saving
+      const processedData = { ...data, urgency: data.urgency[0] }; 
+      
       // Call the service function to save data
-      const result = await saveAssessmentData(user.id, data);
+      const result = await saveAssessmentData(user.id, processedData); // Use processedData
 
-      if (result.success) {
+      if (result.success && result.planId) { // Check for planId
         toast({
           title: "Assessment Saved",
           description: "Your assessment data has been saved successfully.",
         });
-        // Navigate to pricing or results page after successful save
-        // Using pricing for now as per original logic
-        navigate("/pricing"); 
-        // If you want to navigate to a results page using the planId:
-        // navigate(`/results/${result.planId}`); 
+        // Navigate to the results page using the planId
+        navigate(`/results/${result.planId}`); 
       } else {
+        // Handle case where saving succeeded but no planId returned (shouldn't happen ideally)
+        const errorMsg = result.error?.message || "An unknown error occurred while saving.";
         toast({
           title: "Error Saving Assessment",
-          description: result.error?.message || "An unknown error occurred.",
+          description: errorMsg,
           variant: "destructive",
         });
       }
-    } catch (error) {
+    } catch (error) { // Catch errors from saveAssessmentData or other issues
       console.error("Submission error:", error);
+      const message = error instanceof Error ? error.message : "An unexpected error occurred during submission.";
       toast({
         title: "Submission Error",
-        description: "An unexpected error occurred during submission.",
+        description: message,
         variant: "destructive",
       });
     } finally {

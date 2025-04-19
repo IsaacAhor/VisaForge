@@ -1,6 +1,11 @@
 import { supabase } from '@/integrations/supabase/client';
 import type { Database } from '@/integrations/supabase/types';
-import type { Inputs as AssessmentFormData } from '@/components/assessment/AssessmentForm'; // Assuming Inputs type is exported
+import type { Inputs as AssessmentFormInputs } from '@/components/assessment/AssessmentForm'; // Renamed for clarity
+
+// Define the type for the *processed* data expected by this service
+type ProcessedAssessmentData = Omit<AssessmentFormInputs, 'urgency'> & {
+  urgency: number; // Expect a single number here
+};
 
 // Define the type for the data to be inserted, mapping form data to table columns
 type MigrationPlanInsert = Database['public']['Tables']['migration_plans']['Insert'];
@@ -8,7 +13,7 @@ type MigrationPlanInsert = Database['public']['Tables']['migration_plans']['Inse
 // Function to save assessment data to the migration_plans table
 export const saveAssessmentData = async (
   userId: string,
-  formData: AssessmentFormData
+  formData: ProcessedAssessmentData // Use the processed data type
 ): Promise<{ success: boolean; error?: Error | null; planId?: string }> => {
   
   // Map form data to the migration_plans structure
@@ -42,7 +47,7 @@ export const saveAssessmentData = async (
     documents: formData.documents,
     specialConsiderations: formData.specialConsiderations,
     moveTimeline: formData.moveTimeline,
-    urgency: formData.urgency[0], // Assuming single value from slider
+    urgency: formData.urgency, // Use the single number directly
     userEmail: formData.userEmail, // Store email submitted in form
     downloadPdf: formData.downloadPdf,
   };

@@ -1,8 +1,11 @@
-import { useState } from "react"; // Import useState for Calendar
+import { useState } from "react"; // Import useState for Calendar and loading state
 import { useForm, Controller, SubmitHandler } from "react-hook-form"; // Import Controller
 import { useNavigate } from "react-router-dom";
 import { format } from "date-fns"; // Import date-fns for formatting
 import { CalendarIcon } from "lucide-react"; // Import icon
+import { useAuth } from "@/contexts/AuthContext"; // Import useAuth
+import { saveAssessmentData } from "@/services/assessmentService"; // Import the service function
+import { toast } from "@/hooks/use-toast"; // Import toast for notifications
 import { cn } from "@/lib/utils"; // Import cn utility
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -18,7 +21,8 @@ import { Slider } from "@/components/ui/slider"; // Import Slider
 import { Switch } from "@/components/ui/switch"; // Import Switch
 
 // Define the type for your form data based on the specification
-type Inputs = {
+// Export the type so it can be used elsewhere
+export type Inputs = {
   // Section 1
   fullName: string;
   dateOfBirth?: Date; 
@@ -70,11 +74,53 @@ export function AssessmentForm() {
     }
   }); 
   const navigate = useNavigate();
+  const { user } = useAuth(); // Get user from auth context
+  const [isSubmitting, setIsSubmitting] = useState(false); // Add loading state
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
-    const processedData = { ...data, urgency: data.urgency[0] }; 
-    console.log("Assessment Data:", processedData); 
-    navigate("/pricing"); 
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    if (!user) {
+      toast({
+        title: "Authentication Required",
+        description: "Please sign in before submitting the assessment.",
+        variant: "destructive",
+      });
+      navigate("/auth"); // Redirect to login if not authenticated
+      return;
+    }
+
+    setIsSubmitting(true); // Set loading state
+
+    try {
+      // Call the service function to save data
+      const result = await saveAssessmentData(user.id, data);
+
+      if (result.success) {
+        toast({
+          title: "Assessment Saved",
+          description: "Your assessment data has been saved successfully.",
+        });
+        // Navigate to pricing or results page after successful save
+        // Using pricing for now as per original logic
+        navigate("/pricing"); 
+        // If you want to navigate to a results page using the planId:
+        // navigate(`/results/${result.planId}`); 
+      } else {
+        toast({
+          title: "Error Saving Assessment",
+          description: result.error?.message || "An unknown error occurred.",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      console.error("Submission error:", error);
+      toast({
+        title: "Submission Error",
+        description: "An unexpected error occurred during submission.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false); // Reset loading state
+    }
   };
 
   // Watch conditional fields
@@ -723,8 +769,8 @@ export function AssessmentForm() {
 
             {/* Submission Button */}
             <div className="flex justify-end mt-8">
-              <Button type="submit">
-                Submit Assessment
+              <Button type="submit" disabled={isSubmitting}>
+                {isSubmitting ? "Submitting..." : "Submit Assessment"}
               </Button>
             </div>
           </CardContent>

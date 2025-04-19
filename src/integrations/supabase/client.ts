@@ -6,25 +6,30 @@ import type { Database } from "./types";
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
-// DEBUG: Log environment variables at runtime
-console.log("Supabase Client Init: VITE_SUPABASE_URL =", supabaseUrl);
-console.log("Supabase Client Init: VITE_SUPABASE_ANON_KEY =", supabaseAnonKey ? 'Exists' : 'MISSING or undefined'); // Don't log the key itself
+// Removed DEBUG logs
 
 if (!supabaseUrl || !supabaseAnonKey) {
-  console.error("Supabase Client Init Error: URL or Anon Key is missing!"); // Log error before throwing
+  // Error handling remains
+  console.error("Supabase Client Init Error: URL or Anon Key is missing!"); 
   throw new Error("Supabase URL and Anon Key must be provided.");
 }
 
-// Import the supabase client like this:
-// import { supabase } from "@/integrations/supabase/client";
+let supabaseInstance;
+try {
+  supabaseInstance = createClient<Database>(supabaseUrl, supabaseAnonKey, {
+    auth: {
+      // Automatically refreshes the session
+      autoRefreshToken: true,
+      // Persists the session locally
+      persistSession: true,
+      // Detects session changes across tabs
+      detectSessionInUrl: true, 
+    },
+  });
+} catch (error) {
+  console.error("Supabase Client Init Error: Failed during createClient call!", error);
+  // Handle the error appropriately, maybe throw it again or set a dummy client
+  throw error; // Re-throw to potentially stop execution if client creation is critical
+}
 
-export const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey, {
-  auth: {
-    // Automatically refreshes the session
-    autoRefreshToken: true,
-    // Persists the session locally
-    persistSession: true,
-    // Detects session changes across tabs
-    detectSessionInUrl: true, 
-  },
-});
+export const supabase = supabaseInstance;

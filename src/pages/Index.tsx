@@ -9,7 +9,7 @@ import { useEffect } from "react"; // Import useEffect
 import { useLocation } from "react-router-dom"; // Import useLocation
 // Removed duplicate imports below
 import { Testimonials } from "@/components/home/Testimonials";
-import { Pricing } from "@/components/home/Pricing";
+// Removed Pricing import
 
 const Index = () => {
   const location = useLocation(); // Get location object
@@ -45,7 +45,7 @@ const Index = () => {
         <Features />
         <HowItWorks />
         <AboutSection /> {/* Added AboutSection */}
-        <Pricing />
+        {/* Removed Pricing component */}
         <Testimonials />
       </main>
       <Footer />

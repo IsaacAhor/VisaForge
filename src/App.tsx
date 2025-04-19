@@ -14,6 +14,7 @@ import Results from "./pages/Results";
 import HowItWorks from "./pages/HowItWorks";
 import About from "./pages/About";
 import Auth from "./pages/Auth";
+import PricingPage from "./pages/Pricing"; // Import the new Pricing page
 import PaymentSuccess from "./pages/PaymentSuccess";
 import PaymentCancelled from "./pages/PaymentCancelled";
 
@@ -38,6 +39,7 @@ const AppContent = () => {
           <Route path="/how-it-works" element={<HowItWorks />} />
           <Route path="/about" element={<About />} />
           <Route path="/auth" element={<Auth />} />
+          <Route path="/pricing" element={<PricingPage />} /> {/* Add Pricing route */}
 
           {/* Protected Routes */}
           <Route

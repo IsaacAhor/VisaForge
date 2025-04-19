@@ -40,7 +40,7 @@ export function Navbar() {
         About
       </Link>
       <Link 
-        to="/#pricing" 
+        to="/pricing" // Changed link to point to the new page
         className="text-sm font-medium text-visa-dark/80 hover:text-visa-dark transition-colors"
         // Removed onClick handler
       >

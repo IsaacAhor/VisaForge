@@ -105,7 +105,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
            window.history.replaceState({}, document.title, window.location.pathname + window.location.search);
            // If the hash had a token AND we now have a session, set the redirect target
            if (session) {
-             setLoginRedirectTarget('/#pricing'); // Set target for App component to handle
+             setLoginRedirectTarget('/pricing'); // Set target to the new pricing page
            }
          }
        }

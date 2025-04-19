@@ -4,7 +4,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom"; // Import useNavigate
+import { BrowserRouter, Routes, Route, useNavigate, Navigate } from "react-router-dom"; // Import useNavigate and Navigate
 import { useAuth } from './contexts/AuthContext'; // Import useAuth
 import ProtectedRoute from "./components/layout/ProtectedRoute"; // Import ProtectedRoute
 import Index from "./pages/Index";
@@ -35,6 +35,7 @@ const AppContent = () => {
   return (
     <Routes>
       {/* Public Routes */}
+      <Route path="/" element={<Navigate to="/home" replace />} /> {/* Add redirect from root */}
       <Route path="/home" element={<Index />} /> {/* Changed path to /home */}
           <Route path="/how-it-works" element={<HowItWorks />} />
           <Route path="/about" element={<About />} />

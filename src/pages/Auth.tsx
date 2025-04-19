@@ -24,7 +24,7 @@ export default function Auth() {
 
   // If user is already logged in, redirect to home
   if (user) {
-    navigate('/');
+    navigate('/home'); // Changed redirect to /home
     return null;
   }
 

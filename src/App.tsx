@@ -35,7 +35,7 @@ const AppContent = () => {
   return (
     <Routes>
       {/* Public Routes */}
-      <Route path="/" element={<Index />} />
+      <Route path="/home" element={<Index />} /> {/* Changed path to /home */}
           <Route path="/how-it-works" element={<HowItWorks />} />
           <Route path="/about" element={<About />} />
           <Route path="/auth" element={<Auth />} />

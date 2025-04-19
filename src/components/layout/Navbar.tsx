@@ -17,7 +17,7 @@ export function Navbar() {
     try {
       await signOut();
       toast({ title: "Signed out successfully." });
-      navigate('/'); // Redirect to home after sign out
+      navigate('/home'); // Redirect to /home after sign out
     } catch (error) {
       toast({ title: "Sign out failed", description: "Please try again.", variant: "destructive" });
     }
@@ -27,14 +27,14 @@ export function Navbar() {
   const navLinkItems = (
     <>
       <Link
-        to="/#how-it-works" 
+        to="/home#how-it-works" // Point to page + hash
         className="text-sm font-medium text-visa-dark/80 hover:text-visa-dark transition-colors"
         // Removed onClick handler
       >
         How It Works
       </Link>
       <Link 
-        to="/#about" // Changed link to point to the section ID
+        to="/home#about" // Point to page + hash
         className="text-sm font-medium text-visa-dark/80 hover:text-visa-dark transition-colors"
       >
         About
@@ -94,7 +94,7 @@ export function Navbar() {
     <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-white/80 border-b border-gray-100">
       <div className="container flex h-16 items-center justify-between">
         <Link 
-          to="/" 
+          to="/home" // Changed link to /home
           className="flex items-center gap-2 font-semibold text-xl text-visa-dark"
           onClick={handleLogoClick} // Add onClick handler
         >

@@ -60,15 +60,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   useEffect(() => {
     setLoading(true); // Start loading
     const getSessionAndProfile = async () => {
-      // --- TEMPORARY DIAGNOSTIC ---
-      console.log("AuthProvider: Bypassing getSession() call");
-      const session = null;
-      const sessionError = null;
-      // const { data: { session }, error: sessionError } = await supabase.auth.getSession(); 
-      // --- END TEMPORARY DIAGNOSTIC ---
-
+      
+      const { data: { session }, error: sessionError } = await supabase.auth.getSession(); 
+      
       if (sessionError) {
-        console.error("Error getting session:", sessionError); 
+        console.error("Error getting session:", sessionError); // Keep actual error log
         setSession(null);
         setUser(null);
         setProfile(null);

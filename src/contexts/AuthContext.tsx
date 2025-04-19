@@ -156,9 +156,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
   // Don't render children until the initial session check is complete
+  // TEMPORARY DEBUG: Always render children to bypass loading check
   return (
     <AuthContext.Provider value={value}>
-      {!loading && children}
+      {/* {!loading && children} */}
+      {children} 
     </AuthContext.Provider>
   );
 };

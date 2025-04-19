@@ -6,8 +6,13 @@ import type { Database } from "./types";
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
+// DEBUG: Log environment variables at runtime
+console.log("Supabase Client Init: VITE_SUPABASE_URL =", supabaseUrl);
+console.log("Supabase Client Init: VITE_SUPABASE_ANON_KEY =", supabaseAnonKey ? 'Exists' : 'MISSING or undefined'); // Don't log the key itself
+
 if (!supabaseUrl || !supabaseAnonKey) {
-  throw new Error("Supabase URL and Anon Key must be provided in .env");
+  console.error("Supabase Client Init Error: URL or Anon Key is missing!"); // Log error before throwing
+  throw new Error("Supabase URL and Anon Key must be provided.");
 }
 
 // Import the supabase client like this:

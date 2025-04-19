@@ -82,8 +82,8 @@ export function Navbar() {
   const NavLinks = () => navLinkItems; // Use the defined items
 
   const handleLogoClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
-    // If already on the homepage, scroll to top smoothly
-    if (location.pathname === '/') {
+    // If already on the homepage (/home), scroll to top smoothly
+    if (location.pathname === '/home') {
       event.preventDefault(); // Prevent default link navigation
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }

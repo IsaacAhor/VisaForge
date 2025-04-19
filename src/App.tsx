@@ -1,10 +1,11 @@
 
+import { useEffect } from 'react'; // Import useEffect
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-// AuthProvider is already in main.tsx, remove from here
+import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom"; // Import useNavigate
+import { useAuth } from './contexts/AuthContext'; // Import useAuth
 import ProtectedRoute from "./components/layout/ProtectedRoute"; // Import ProtectedRoute
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
@@ -18,16 +19,22 @@ import PaymentCancelled from "./pages/PaymentCancelled";
 
 const queryClient = new QueryClient();
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    {/* <AuthProvider> - Removed redundant provider */}
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          {/* Public Routes */}
-          <Route path="/" element={<Index />} />
+// Define a component to handle the redirect logic
+const AppContent = () => {
+  const navigate = useNavigate();
+  const { loginRedirectTarget, clearLoginRedirect } = useAuth();
+
+  useEffect(() => {
+    if (loginRedirectTarget) {
+      navigate(loginRedirectTarget);
+      clearLoginRedirect(); // Clear the target after navigation
+    }
+  }, [loginRedirectTarget, navigate, clearLoginRedirect]);
+
+  return (
+    <Routes>
+      {/* Public Routes */}
+      <Route path="/" element={<Index />} />
           <Route path="/how-it-works" element={<HowItWorks />} />
           <Route path="/about" element={<About />} />
           <Route path="/auth" element={<Auth />} />
@@ -66,12 +73,22 @@ const App = () => (
             }
           />
 
-          {/* Catch-all Not Found Route */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+      {/* Catch-all Not Found Route */}
+      <Route path="*" element={<NotFound />} />
+    </Routes>
+  );
+};
+
+const App = () => (
+  <QueryClientProvider client={queryClient}>
+    {/* AuthProvider is in main.tsx */}
+    <TooltipProvider>
+      <Toaster />
+      <Sonner />
+      <BrowserRouter>
+        <AppContent /> {/* Use the component that contains the hook */}
       </BrowserRouter>
     </TooltipProvider>
-    {/* </AuthProvider> - Removed redundant provider */}
   </QueryClientProvider>
 );
 

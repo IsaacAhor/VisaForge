@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect, useContext, ReactNode } from 'react';
 import { Session, User } from '@supabase/supabase-js';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+// Removed useNavigate import
 import { supabase } from '@/integrations/supabase/client';
 import type { Database } from '@/integrations/supabase/types'; // Import Database type
 
@@ -12,6 +12,8 @@ interface AuthContextType {
   user: User | null;
   profile: Profile | null; // Add profile
   loading: boolean;
+  loginRedirectTarget: string | null; // State to trigger navigation after OAuth
+  clearLoginRedirect: () => void; // Function to clear the redirect state
   signOut: () => Promise<void>;
   refreshProfile: () => Promise<void>; // Add function to refresh profile
 }
@@ -23,11 +25,12 @@ interface AuthProviderProps {
 }
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const navigate = useNavigate(); // Get navigate function
+  // Removed useNavigate hook
   const [session, setSession] = useState<Session | null>(null);
   const [user, setUser] = useState<User | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null); // Add profile state
   const [loading, setLoading] = useState(true); // Keep loading state
+  const [loginRedirectTarget, setLoginRedirectTarget] = useState<string | null>(null); // Add redirect state
 
   // Function to fetch profile data
   const fetchProfile = async (userId: string) => {
@@ -96,13 +99,13 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
          }
          setLoading(false); // Finish loading after state change
 
-         // Clean up URL hash after OAuth redirect and navigate if needed
+         // Clean up URL hash after OAuth redirect and set flag for navigation
          const hashContainsToken = window.location.hash.includes('#access_token');
          if (hashContainsToken) {
            window.history.replaceState({}, document.title, window.location.pathname + window.location.search);
-           // If the hash had a token AND we now have a session, navigate to pricing
+           // If the hash had a token AND we now have a session, set the redirect target
            if (session) {
-             navigate('/#pricing');
+             setLoginRedirectTarget('/#pricing'); // Set target for App component to handle
            }
          }
        }
@@ -137,11 +140,17 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     setLoading(false); // Set loading false after sign out attempt
   };
 
+  const clearLoginRedirect = () => {
+    setLoginRedirectTarget(null);
+  };
+
   const value = {
     session,
     user,
     profile, // Add profile state to value
     loading,
+    loginRedirectTarget, // Add redirect state to context value
+    clearLoginRedirect, // Add clear function to context value
     signOut,
     refreshProfile, // Add refreshProfile function to value
   };

@@ -63,7 +63,7 @@ export default {
           ring: 'hsl(var(--sidebar-ring))'
         },
         visa: {
-          blue: "#007aff", // Updated blue color
+          blue: "#004A99", // Updated blue color again
           // teal: "#32ADE6", // Removed visa-teal
           dark: "#1D1D1F",
           orange: "#fa8072",

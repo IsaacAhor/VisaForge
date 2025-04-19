@@ -59,11 +59,14 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   useEffect(() => {
     setLoading(true); // Start loading
+    console.log("AuthProvider: useEffect started, loading=true"); // DEBUG
     const getSessionAndProfile = async () => {
+      console.log("AuthProvider: getSessionAndProfile called"); // DEBUG
       const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+      console.log("AuthProvider: getSession result", { session, sessionError }); // DEBUG
 
       if (sessionError) {
-        console.error("Error getting session:", sessionError);
+        console.error("AuthProvider: Error getting session:", sessionError);
         setSession(null);
         setUser(null);
         setProfile(null);
@@ -79,15 +82,20 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         await fetchProfile(currentUser.id); // Fetch profile if user exists
       } else {
         setProfile(null); // Clear profile if no user
+        console.log("AuthProvider: No user in initial session"); // DEBUG
       }
       setLoading(false); // Finish loading after session and profile check
+      console.log("AuthProvider: getSessionAndProfile finished, loading=false"); // DEBUG
     };
 
     getSessionAndProfile();
 
+    console.log("AuthProvider: Setting up onAuthStateChange listener"); // DEBUG
     const { data: authListener } = supabase.auth.onAuthStateChange(
       async (_event, session) => {
+        console.log("AuthProvider: onAuthStateChange triggered", { _event, session }); // DEBUG
         setLoading(true); // Start loading on auth change
+        console.log("AuthProvider: onAuthStateChange loading=true"); // DEBUG
         setSession(session);
         const currentUser = session?.user ?? null;
         setUser(currentUser);
@@ -96,8 +104,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           await fetchProfile(currentUser.id); // Fetch profile on auth change
          } else {
            setProfile(null); // Clear profile if user logs out
+           console.log("AuthProvider: onAuthStateChange no user"); // DEBUG
          }
          setLoading(false); // Finish loading after state change
+         console.log("AuthProvider: onAuthStateChange finished, loading=false"); // DEBUG
 
          // Clean up URL hash after OAuth redirect and set flag for navigation
          const hashContainsToken = window.location.hash.includes('#access_token');
@@ -156,11 +166,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
   // Don't render children until the initial session check is complete
-  // TEMPORARY DEBUG: Always render children to bypass loading check
   return (
     <AuthContext.Provider value={value}>
-      {/* {!loading && children} */}
-      {children} 
+      {!loading && children}
     </AuthContext.Provider>
   );
 };

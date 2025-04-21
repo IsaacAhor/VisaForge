@@ -1,4 +1,6 @@
-# Welcome to your Lovable project
+# VisaForge
+
+A platform you're building to provide personalized global migration strategies. It helps users understand their visa eligibility, application costs, processing timelines, and fallback options—all tailored to their unique profile.
 
 ## Project info
 
